@@ -1,34 +1,32 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: transparent; user-select: none; }
-#pet { width: 300px; height: 460px; position: relative; -webkit-app-region: drag; cursor: grab; font-family: 'Microsoft YaHei', sans-serif; }
-#pet.dragging { cursor: grabbing; }
-.cat { position: absolute; bottom: 16px; width: 240px; height: 220px; overflow: visible; }
-.shadow { fill: #50351d; opacity: .14; }
-.body { transform-origin: 120px 195px; animation: breathe 2.8s ease-in-out infinite; }
-.tail { fill: none; stroke: #edb778; stroke-width: 18; stroke-linecap: round; transform-origin: 169px 172px; animation: wag 3s ease-in-out infinite; }
-.eyes { transform-origin: 120px 103px; animation: blink 5s infinite; }
-.closed-eyes { display: none; }
-.sleeping .eyes { display: none; }
-.sleeping .closed-eyes { display: inline; }
-.sleeping .tail { animation-play-state: paused; }
-.loving .head { transform-origin: 120px 130px; animation: cuddle .3s ease-in-out alternate 6; }
-#bubble { position: absolute; z-index: 1; top: 4px; left: 10px; right: 10px; text-align: center; font-size: 12px; color: #604735; background: #fff7e9; border-radius: 14px; padding: 9px 5px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+#pet { width: 300px; height: 460px; position: relative; font-family: 'Microsoft YaHei', sans-serif; -webkit-app-region: no-drag; }
+#bubble { position: absolute; z-index: 3; top: 29px; left: 8px; right: 8px; text-align: center; font-size: 12px; color: #604735; background: #fff7e9; border-radius: 14px; padding: 9px 5px; opacity: 0; transition: opacity .2s; pointer-events: none; }
 #bubble.visible { opacity: 1; }
-.hint { position: absolute; bottom: 2px; width: 100%; text-align: center; font-size: 10px; color: #604735; background: #fff7e9dd; border-radius: 10px; padding: 3px; opacity: 0; }
-#pet:hover .hint { opacity: 1; }
-@keyframes breathe { 50% { transform: scaleY(.97); } }
-@keyframes wag { 50% { transform: rotate(-12deg); } }
-@keyframes blink { 0%, 43%, 47%, 100% { transform: scaleY(1); } 45% { transform: scaleY(.08); } }
-@keyframes cuddle { to { transform: rotate(6deg); } }
-
-#portrait { position: absolute; bottom: 24px; left: 0; width: 100%; height: 385px; object-fit: contain; pointer-events: auto; animation: portrait-float 4s ease-in-out infinite; transform-origin: center bottom; }
+.drag-handle { position: absolute; z-index: 4; top: 2px; left: 45px; right: 45px; text-align: center; background: #fff7e9ed; color: #604735; border-radius: 10px; font-size: 11px; padding: 4px; -webkit-app-region: drag; cursor: grab; }
+#portrait { position: absolute; bottom: 100px; left: 0; width: 100%; height: 320px; object-fit: contain; cursor: pointer; -webkit-app-region: no-drag; animation: portrait-float 4s ease-in-out infinite; transform-origin: center bottom; }
 #portrait[hidden] { display: none; }
-.has-photo .cat { display: none; }
 .sleeping #portrait { animation-play-state: paused; opacity: .8; }
 .loving #portrait { animation: portrait-love .3s ease-in-out alternate 6; }
+.poked #portrait { animation: poke .18s ease-in-out alternate 6; }
+.happy #portrait { animation: bounce .35s ease-in-out 5; }
+.sour #portrait { animation: shake .12s ease-in-out alternate 10; }
+.spicy #portrait { animation: bounce .18s ease-in-out 10; }
+.cool #portrait { animation: portrait-love .7s ease-in-out alternate 4; }
+#expression { position: absolute; z-index: 2; top: 95px; right: 12px; font-size: 32px; background: #fff7e9ee; border-radius: 50%; padding: 3px; pointer-events: none; }
+#snack-effect { position: absolute; z-index: 2; top: 245px; left: 18px; font-size: 40px; pointer-events: none; }
+#snack-effect:not(:empty) { animation: food .8s ease-in-out infinite; }
+.toolbar { position: absolute; z-index: 5; bottom: 2px; left: 5px; right: 5px; background: #fff7e9f5; border: 1px solid #e7ccb7; border-radius: 16px; padding: 6px; -webkit-app-region: no-drag; }
+.controls, .snacks { display: flex; justify-content: center; gap: 5px; }
+button { -webkit-app-region: no-drag; cursor: pointer; border: 1px solid #e7ccb7; border-radius: 12px; padding: 5px 10px; background: #fffaf4; color: #604735; font: 12px 'Microsoft YaHei', sans-serif; }
+button:hover { background: #ffe4d3; }
+button:focus-visible { outline: 2px solid #b6746f; }
+.snacks { margin-top: 5px; }
+.snacks button { font-size: 21px; padding: 2px 9px; }
+.instructions { text-align: center; font-size: 10px; color: #806c5d; margin-top: 4px; }
 @keyframes portrait-float { 50% { transform: translateY(-5px); } }
 @keyframes portrait-love { to { transform: rotate(2deg) scale(1.02); } }
-
-.controls { position: absolute; bottom: 2px; left: 0; width: 100%; display: flex; justify-content: center; gap: 10px; -webkit-app-region: no-drag; }
-.controls button { -webkit-app-region: no-drag; cursor: pointer; border: 1px solid #e7ccb7; border-radius: 14px; padding: 5px 16px; background: #fff7e9; color: #604735; font: 12px "Microsoft YaHei", sans-serif; }
-.controls button:hover { background: #ffe4d3; }
+@keyframes poke { to { transform: translateX(6px) rotate(2deg); } }
+@keyframes bounce { 50% { transform: translateY(-12px); } }
+@keyframes shake { to { transform: translateX(-5px) rotate(-2deg); } }
+@keyframes food { 50% { transform: translateY(-10px) rotate(12deg); } }
