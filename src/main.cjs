@@ -1,7 +1,6 @@
 const { app, BrowserWindow, ipcMain, Menu, screen, dialog } = require('electron');
 const path = require('node:path');
 let win;
-let dragOrigin;
 function createPet() {
   const area = screen.getPrimaryDisplay().workArea;
   win = new BrowserWindow({
@@ -25,17 +24,6 @@ function createPet() {
   win.on('closed', () => { win = null; });
 }
 function fromPet(event) { return win && event.sender === win.webContents; }
-ipcMain.on('drag-start', event => {
-  if (!fromPet(event)) return;
-  dragOrigin = { cursor: screen.getCursorScreenPoint(), position: win.getPosition() };
-});
-ipcMain.on('drag-move', event => {
-  if (!fromPet(event) || !dragOrigin) return;
-  const cursor = screen.getCursorScreenPoint();
-  win.setPosition(dragOrigin.position[0] + cursor.x - dragOrigin.cursor.x,
-    dragOrigin.position[1] + cursor.y - dragOrigin.cursor.y);
-});
-ipcMain.on('drag-end', event => { if (fromPet(event)) dragOrigin = null; });
 ipcMain.on('pet-menu', event => {
   if (!fromPet(event)) return;
   Menu.buildFromTemplate([

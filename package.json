@@ -1,20 +1,32 @@
 {
   "name": "windows-desktop-pet",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "A small animated desktop cat for Windows",
   "main": "src/main.cjs",
   "scripts": {
     "start": "electron .",
     "check": "node --check src/main.cjs && node --check src/preload.cjs && node --check src/pet.js",
-    "dist:win": "electron-builder --win portable --x64"
+    "dist:win": "electron-builder --win portable --x64",
+    "test": "node --test tests/*.test.cjs"
   },
-  "devDependencies": {"electron": "^37.0.0", "electron-builder": "^26.0.0"},
+  "devDependencies": {
+    "electron": "^37.0.0",
+    "electron-builder": "^26.0.0"
+  },
   "build": {
     "appId": "com.desktop.catpet",
     "productName": "DesktopCat",
-    "files": ["src/**/*", "package.json"],
-    "win": {"target": "portable"},
-    "directories": {"output": "dist"}
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "portable"
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "compression": "normal"
   }
 }
